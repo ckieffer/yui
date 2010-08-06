@@ -8,6 +8,10 @@
  * @see http://developer.yahoo.com/yui/examples/autocomplete/ac_combobox.html
  * @see http://developer.yahoo.com/yui/examples/autocomplete/ac_itemselect.html
  *
+ * @example http://github.com/ckieffer/yui/raw/master/yui.autocomplete.html
+ *
+ * @todo Refactor to standard YUI widget object
+ * @todo Use delegate to attach autocomplete to dynamically added elements
  * @todo Add support for remote data sources
  * @todo Pass or set configs per autocomplete element on the page
  */
@@ -21,20 +25,27 @@ YAHOO.example.autocomplete = function(e) {
   // The autocomplete input
   var oInput = YAHOO.util.Dom.getFirstChild(elContainer);
 
+  // Hidden fields to populate from selected or input AC widget value
+  var oID = YAHOO.util.Dom.getElementsByClassName('acID', 'input', acKey);
+  var oName = YAHOO.util.Dom.getElementsByClassName('acName', 'input', acKey);
+  
+  // Parent form element
+  var oForm = YAHOO.util.Dom.getAncestorByTagName(acKey, 'form');
+
   // Create and append an options container
   var oOptions = document.createElement('div');
   oOptions.className = 'acOptions';
   elContainer.appendChild(oOptions);
 
   // Instantiate Data Source
-  var oData = YAHOO.example.Data[elContainer.get('id')];
+  var oData = YAHOO.example.Data[acKey];
   var oDS = new YAHOO.util.LocalDataSource(oData);
-  oDS.responseSchema = {fields: ["name", "id"]};
+  oDS.responseSchema = {fields: ['name', 'id']};
 
   // AutoComplete configuration options
   var oConfigs = {
     typeAhead: false,
-    prehighlightClassName: "yui-ac-prehighlight",
+    prehighlightClassName: 'yui-ac-prehighlight',
     useShadow: true,
     queryDelay: 0,
     minQueryLength: 0,
@@ -77,10 +88,6 @@ YAHOO.example.autocomplete = function(e) {
     oAC.containerCollapseEvent.subscribe(function(){YAHOO.util.Dom.removeClass(Toggler, 'open')});
   }
 
-  // Hidden fields to populate from selected or input AC widget value
-  var oID = YAHOO.util.Dom.getElementsByClassName('acID', 'input', acKey);
-  var oName = YAHOO.util.Dom.getElementsByClassName('acName', 'input', acKey);
-
   // Define an event handler to populate a hidden form field
   var onSelect = function(sType, aArgs) {
       var oAC = aArgs[0]; // reference back to the AC instance
@@ -112,7 +119,6 @@ YAHOO.example.autocomplete = function(e) {
       oName[0].value = '';
     }
   };
-  var oForm = YAHOO.util.Dom.getAncestorByTagName(acKey, 'form');
   YAHOO.util.Event.addListener(oForm, 'submit', onFormSubmit);
 
   return {
