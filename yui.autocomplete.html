@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <title>YUI Autocomplete Widget</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">  
+  <!-- Combo-handled YUI CSS files: -->
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.1/build/assets/skins/sam/skin.css">
+  <!-- Combo-handled YUI JS files: -->
+  <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.1/build/utilities/utilities.js&2.8.1/build/datasource/datasource-min.js&2.8.1/build/autocomplete/autocomplete-min.js&2.8.1/build/event-mouseenter/event-mouseenter-min.js&2.8.1/build/selector/selector-min.js&2.8.1/build/event-delegate/event-delegate-min.js&2.8.1/build/container/container_core-min.js&2.8.1/build/menu/menu-min.js&2.8.1/build/button/button-min.js"></script>
+  <style type="text/css">
+    /* custom styles for inline instances */
+    .yui-skin-sam .yui-ac-input { position:static;width:20em; vertical-align:middle;}
+    .yui-skin-sam .yui-ac-container { width:20em;left:0px;}
+    /* needed for stacked instances for ie & sf z-index bug of absolute inside relative els */
+    #acBreakfast { z-index:9002; } 
+    #acLunch { z-index:9001; } 
+    #acDinner { z-index:9000; }
+    /* buttons */
+    .yui-ac .yui-button {vertical-align:middle;}
+    .yui-ac .yui-button button {background: url(http://developer.yahoo.com/yui/examples/autocomplete/assets/img/ac-arrow-rt.png) center center no-repeat }
+    .yui-ac .open .yui-button button {background: url(http://developer.yahoo.com/yui/examples/autocomplete/assets/img/ac-arrow-dn.png) center center no-repeat}
+    /* */
+    .yui-ac-input, .yui-button {font-size:1em;}
+    .acToggleList {margin-bottom: .6em;}
+  </style>
+  <!-- AutoComplete widget -->
+  <script type="text/javascript" src="yui.autocomplete.js"></script>
+  <script type="text/javascript">
+    // A JSON object containing possible local data name and id values for the option menu
+    // Add additional Fields for forms with multiple autocomplete fields w/ different datasets
+    YAHOO.example.Data = {
+      acBreakfast: [
+        { name: "cereal", id: 1 },
+        { name: "french toast", id: 2 },
+        { name: "omelette", id: 3 },
+        { name: "pancakes", id: 4 },
+        { name: "waffles", id: 5 }
+      ],
+      acLunch: [
+        { name: "burrito", id: 6 },
+        { name: "garden salad", id: 7 },
+        { name: "hamburger", id: 8 },
+        { name: "sandwich", id: 9 },
+        { name: "tuna salad", id: 10 }
+      ],
+      acDinner: [
+        { name: "meatloaf", id: 11 },
+        { name: "spaghetti", id: 12 },
+        { name: "pot roast", id: 13 },
+        { name: "roast chicken", id: 14 },
+        { name: "steak", id: 15 }
+      ]
+    };
+    // Attach autocomplete
+    YAHOO.util.Event.onContentReady('acBreakfast', YAHOO.example.autocomplete);
+    YAHOO.util.Event.onContentReady('acLunch', YAHOO.example.autocomplete);
+    YAHOO.util.Event.onContentReady('acDinner', YAHOO.example.autocomplete);
+
+    // Show selected or entered values
+    var showAcValues = function(e) {
+      YAHOO.util.Event.preventDefault(e);
+      var oInput = YAHOO.util.Dom.getElementsByClassName('acInput', 'input');
+      var oID = YAHOO.util.Dom.getElementsByClassName('acID', 'input');
+      var oName = YAHOO.util.Dom.getElementsByClassName('acName', 'input');
+      var acDebug = 'The following form values have been set:';
+      for (var i = 0; i < oID.length; i++) {
+        acDebug = acDebug 
+          + '\n\nInput: ' + oInput[i].id 
+          + '\nID: ' + oID[i].value 
+          + '\nName: ' + oName[i].value;
+      }
+      alert(acDebug);
+    };
+    YAHOO.util.Event.addListener('acExample', 'submit', showAcValues);
+  </script>
+</head>
+<body class="yui-skin-sam">
+
+  <form action="#" method="post" id="acExample">
+  
+    <label for="Breakfast">What would you like for breakfast?</label>
+    <div id="acBreakfast" class="acToggleList">
+      <input type="text" name="Breakfast" id="Breakfast" class="acInput">
+      <input type="hidden" name="BreakfastID" id="BreakfastID" class="acID">
+      <input type="hidden" name="BreakfastName" id="BreakfastName" class="acName">
+    </div>
+  
+    <label for="Lunch">What would you like for lunch?</label>
+    <div id="acLunch" class="acToggleList">
+      <input type="text" name="Lunch" id="Lunch" class="acInput">
+      <input type="hidden" name="LunchID" id="LunchID" class="acID">
+      <input type="hidden" name="LunchName" id="LunchName"class="acName" >
+    </div>
+    
+    <label for="Dinner">What would you like for dinner?</label>
+    <div id="acDinner" class="acToggleList">
+      <input type="text" name="Dinner" id="Dinner" class="acInput">
+      <input type="hidden" name="DinnerID" id="DinnerID" class="acID">
+      <input type="hidden" name="DinnerName" id="DinnerName"class="acName" >
+    </div>
+
+    <input type="submit" value="Test" class="yui-button">
+    
+  </form>
+  
+</body>
+</html>
