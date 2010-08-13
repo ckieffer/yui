@@ -21,7 +21,7 @@
     .yui-ac .open .yui-button button {background: url(http://developer.yahoo.com/yui/examples/autocomplete/assets/img/ac-arrow-dn.png) center center no-repeat}
     /* */
     .yui-ac-input, .yui-button {font-size:1em;}
-    .acToggleList {margin-bottom: .6em;}
+    .acContainer {margin-bottom: .6em;}
   </style>
   <!-- AutoComplete widget -->
   <script type="text/javascript" src="yui.autocomplete.js"></script>
@@ -30,25 +30,25 @@
     // Add additional Fields for forms with multiple autocomplete fields w/ different datasets
     YAHOO.example.Data = {
       acBreakfast: [
-        { name: "cereal", id: 1 },
-        { name: "french toast", id: 2 },
-        { name: "omelette", id: 3 },
-        { name: "pancakes", id: 4 },
-        { name: "waffles", id: 5 }
+        { id:  1, name: "cereal" },
+        { id:  2, name: "french toast" },
+        { id:  3, name: "omelette" },
+        { id:  4, name: "pancakes" },
+        { id:  5, name: "waffles" }
       ],
       acLunch: [
-        { name: "burrito", id: 6 },
-        { name: "garden salad", id: 7 },
-        { name: "hamburger", id: 8 },
-        { name: "sandwich", id: 9 },
-        { name: "tuna salad", id: 10 }
+        { id:  6, name: "burrito" },
+        { id:  7, name: "garden salad" },
+        { id:  8, name: "hamburger" },
+        { id:  9, name: "sandwich" },
+        { id: 10, name: "tuna salad" }
       ],
       acDinner: [
-        { name: "meatloaf", id: 11 },
-        { name: "spaghetti", id: 12 },
-        { name: "pot roast", id: 13 },
-        { name: "roast chicken", id: 14 },
-        { name: "steak", id: 15 }
+        { id: 11, name: "meatloaf" },
+        { id: 12, name: "spaghetti" },
+        { id: 13, name: "pot roast" },
+        { id: 14, name: "roast chicken" },
+        { id: 15, name: "steak" }
       ]
     };
     // Attach autocomplete
@@ -71,35 +71,43 @@
       }
       alert(acDebug);
     };
-    YAHOO.util.Event.addListener('acExample', 'submit', showAcValues);
+    YAHOO.util.Event.addListener('acExampleForm', 'submit', showAcValues);
+
+    // Submit button
+    YAHOO.util.Event.onContentReady("acExampleForm", function () {
+      var oSubmitBtn = new YAHOO.widget.Button("acViewValues", { value: "acViewValuesvalue" });
+    });
+    
   </script>
 </head>
 <body class="yui-skin-sam">
 
-  <form action="#" method="post" id="acExample">
+  <form action="#" method="post" id="acExampleForm">
   
     <label for="Breakfast">What would you like for breakfast?</label>
-    <div id="acBreakfast" class="acToggleList">
+    <div id="acBreakfast" class="acContainer acToggle">
       <input type="text" name="Breakfast" id="Breakfast" class="acInput">
       <input type="hidden" name="BreakfastID" id="BreakfastID" class="acID">
       <input type="hidden" name="BreakfastName" id="BreakfastName" class="acName">
     </div>
   
     <label for="Lunch">What would you like for lunch?</label>
-    <div id="acLunch" class="acToggleList">
+    <div id="acLunch" class="acContainer acToggle">
       <input type="text" name="Lunch" id="Lunch" class="acInput">
       <input type="hidden" name="LunchID" id="LunchID" class="acID">
       <input type="hidden" name="LunchName" id="LunchName"class="acName" >
     </div>
     
-    <label for="Dinner">What would you like for dinner?</label>
-    <div id="acDinner" class="acToggleList">
+    <label for="Dinner">What would you like for dinner? (hint: try m, p, r, or s)</label>
+    <div id="acDinner" class="acContainer">
       <input type="text" name="Dinner" id="Dinner" class="acInput">
       <input type="hidden" name="DinnerID" id="DinnerID" class="acID">
       <input type="hidden" name="DinnerName" id="DinnerName"class="acName" >
     </div>
 
-    <input type="submit" value="Test" class="yui-button">
+    <div>
+      <input type="submit" name="acViewFields" value="View Values" id="acViewValues">
+    </div>
     
   </form>
   

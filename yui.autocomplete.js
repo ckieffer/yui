@@ -58,11 +58,11 @@ YAHOO.example.autocomplete = function(e) {
   oAC.maxResultsDisplayed = 40;
 
   // Create an options list toggle button for the AC field
-  if (YAHOO.util.Dom.hasClass(elContainer, 'acToggleList')) {
+  if (YAHOO.util.Dom.hasClass(elContainer, 'acToggle')) {
     // Create and append toggle button
     var oToggle = document.createElement('span');
-    oToggle.className = 'acToggle';
-    oToggle.id = 'acToggle' + acKey;
+    oToggle.className = 'acToggleBtn';
+    oToggle.id = 'acToggleBtn' + acKey;
     elContainer.appendChild(oToggle);
 
     // Subheads combobox
