@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>YUI Calendar Widget</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <!-- Combo-handled YUI CSS files: -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.1/build/button/assets/skins/sam/button.css&2.8.1/build/calendar/assets/skins/sam/calendar.css">
+    <!-- Combo-handled YUI JS files: -->
+    <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.1/build/yahoo-dom-event/yahoo-dom-event.js&2.8.1/build/selector/selector-min.js&2.8.1/build/event-delegate/event-delegate-min.js&2.8.1/build/element/element-min.js&2.8.1/build/button/button-min.js&2.8.1/build/calendar/calendar-min.js"></script>
+    <!-- YUI wrapper CSS and JS files -->
+    <link rel="stylesheet" type="text/css" href="yui.styles.css">
+    <script type="text/javascript" src="yui.calendar.js"></script>
+    <script type="text/javascript" src="yui.utilities.js"></script>
+    <script type="text/javascript">
+      // Initialize calendar widgets
+      YAHOO.util.Event.onAvailable('form_example', YuiDatePicker.initialize, true);
+      // Initialize buttons
+      YAHOO.util.Event.onContentReady('form_example', function () {
+        var oBtn = new YAHOO.widget.Button('choose_date1');
+        var oAddAnother = new YAHOO.widget.Button('add');
+      });
+      // Initialize the add widget button
+      YAHOO.util.Event.on('add-button', 'click', function(e) {
+        YuiUtilties.cloneElement('example1');
+      });
+    </script>
+  </head>
+  <body class="yui-skin-sam">
+
+    <form action="#" id="form_example">
+
+      <div id="example1" class="container">
+        <label for="date1">Date</label>
+        <input type="text" name="date_field1" id="date_field1">
+        <div id="btn_container1" class="btn_container inline">
+          <button type="button" id="choose_date1" name="button1" value="choose">choose</button>
+        </div>
+      </div>
+      
+    </form>
+
+    <div class="yui-utilities">
+      <button type="button" id="add" name="add" value="Add Date Field">Add Date Field</button>
+    </div>
+
+  </body>
+</html>

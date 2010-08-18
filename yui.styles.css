@@ -1,0 +1,32 @@
+body, input {
+  font: 1em 'Lucida Grande', Arial, sans-serif;
+}
+
+.inline {
+  display: inline-block;
+  position: relative;
+}
+
+form .container {
+  background: #e7e7e7;
+  border: 1px solid #fff;
+  border-bottom: none;
+  padding: .4em !important;
+}
+
+.container input {
+  margin-top: 0 !important;
+}
+
+.container .yui-button {
+  font-size: .8em;
+}
+
+.yui-button button,
+.yui-button a {
+  outline: none;
+}
+
+.yui-utilities {
+  margin-top: 1em;
+}
