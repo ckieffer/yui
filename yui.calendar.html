@@ -12,8 +12,15 @@
     <script type="text/javascript" src="yui.calendar.js"></script>
     <script type="text/javascript" src="yui.utilities.js"></script>
     <script type="text/javascript">
+      var yuiConfig = {
+        calendar: {
+          title:'Select a date:',
+          close:true,
+          navigator:true
+        }
+      };
       // Initialize calendar widgets
-      YAHOO.util.Event.onAvailable('form_example', YuiDatePicker.initialize, true);
+      YAHOO.util.Event.onAvailable('form_example', YuiCalendar.initialize, true);
       // Initialize buttons
       YAHOO.util.Event.onContentReady('form_example', function () {
         var oBtn = new YAHOO.widget.Button('choose_date1');
@@ -30,7 +37,7 @@
     <form action="#" id="form_example">
 
       <div id="example1" class="container">
-        <label for="date1">Date</label>
+        <label for="date_field1">Date</label>
         <input type="text" name="date_field1" id="date_field1">
         <div id="btn_container1" class="btn_container inline">
           <button type="button" id="choose_date1" name="button1" value="choose">choose</button>

@@ -7,7 +7,6 @@
  * 
  * @link http://developer.yahoo.com/yui/calendar/
  *
- * @todo Test against IE and Opera
  * @todo Write a usage blog post, documentation
  *
  * Progressive enhancement
@@ -20,12 +19,16 @@
  * @todo Evaluate and add accessibility features
  *
  * Configuration
- * @todo Allow user-defined widget configurations
  * @todo Pass date formats for date fields through an attribute on the field
  */
 
-YuiDatePicker = {
+YuiCalendar = {
   
+  config : {
+    title:'Choose a date:',
+    close:true,
+    navigator:true
+  },
   calendarWidget : null,
   container : 'calendar_container',
   calendarID : 'yui_calendar',
@@ -36,11 +39,13 @@ YuiDatePicker = {
   btnClassRegEx : new RegExp('choose_date'),
   
   initialize : function() {
-    YuiDatePicker.renderContainer();
-    YAHOO.util.Event.delegate(this, 'click', YuiDatePicker.click, 'button');
+    var self = YuiCalendar;
+    self.setConfig();
+    self.renderContainer();
+    YAHOO.util.Event.delegate(this, 'click', self.click, 'button');
   },
   click : function(e) {
-    var self = YuiDatePicker;
+    var self = YuiCalendar;
     self.btn = YAHOO.util.Event.getTarget(e);
     if (self.btn.id.match(self.btnClassRegEx)) {
       self.btnContainer = YAHOO.util.Dom.getAncestorByClassName(self.btn, self.btnContainerClass);
@@ -50,6 +55,13 @@ YuiDatePicker = {
       }
       self.calendarWidget.show();
       self.positionCalendar();
+    }
+  },
+  setConfig : function() {
+    if (typeof(yuiConfig) != 'undefined' && typeof(yuiConfig.calendar) != 'undefined') {
+      this.config = yuiConfig.calendar;
+    } else {
+      this.config = YuiCalendar.config;
     }
   },
   renderContainer : function() {
@@ -62,10 +74,7 @@ YuiDatePicker = {
     this.calendarWidget = new YAHOO.widget.Calendar(
         this.calendarID,
         this.container,
-        {
-          title:'Choose a date:',
-          close:true,
-          navigator:true}
+        this.config
       );
     this.calendarWidget.selectEvent.subscribe(this.populateDateField, this, true);
     this.calendarWidget.render();
