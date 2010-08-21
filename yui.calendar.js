@@ -17,18 +17,16 @@
  * @todo Clicking toggle buttons a second time, or clicking anywhere but the calendar, should close the calendar
  * @todo Add a second mode which triggers date picker when a date field gains focus
  * @todo Evaluate and add accessibility features
- *
- * Configuration
- * @todo Pass date formats for date fields through an attribute on the field
  */
 
 YuiCalendar = {
   
   config : {
-    title:'Choose a date:',
-    close:true,
-    navigator:true
+    title: 'Choose a date:',
+    close: true,
+    navigator: true
   },
+  dateFormat : 'MM/DD/YYYY',
   calendarWidget : null,
   container : 'calendar_container',
   calendarID : 'yui_calendar',
@@ -60,6 +58,9 @@ YuiCalendar = {
   setConfig : function() {
     if (typeof(yuiConfig) != 'undefined' && typeof(yuiConfig.calendar) != 'undefined') {
       this.config = yuiConfig.calendar;
+      if (typeof(yuiConfig.calendar.dateFormat) == 'undefined') {
+        this.config.dateFormat = this.dateFormat;
+      }
     } else {
       this.config = YuiCalendar.config;
     }
@@ -86,7 +87,10 @@ YuiCalendar = {
   },
   populateDateField : function() {
     var date = this.calendarWidget.getSelectedDates()[0];
-    YAHOO.util.Dom.get(this.activeInput).value = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+    var formattedDate = this.config.dateFormat.replace(/MM/i, date.getMonth());
+    formattedDate = formattedDate.replace(/DD/i, date.getDate());
+    formattedDate = formattedDate.replace(/YYYY/i, date.getFullYear());
+    YAHOO.util.Dom.get(this.activeInput).value = formattedDate;
     this.calendarWidget.hide();
   },
   hide : function() {
